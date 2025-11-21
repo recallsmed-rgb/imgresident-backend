@@ -53,18 +53,24 @@ public class SecurityConfig {
     return http.build();
   }
   
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-      CorsConfiguration config = new CorsConfiguration();
-      config.setAllowedOrigins(List.of("http://localhost:3000"));
-      config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-      config.setAllowedHeaders(List.of("*"));
-      config.setAllowCredentials(true);
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
 
-      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-      source.registerCorsConfiguration("/**", config);
-      return source;
-  }
+    // 🔥 ALLOW LOCAL + NETLIFY FRONTEND
+    config.setAllowedOrigins(List.of(
+            "http://localhost:3000",
+            "https://imgresident.netlify.app"
+    ));
+
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+}
 
 
   @Bean
